@@ -8,6 +8,14 @@ it meets the bounty gate: 1-140 characters, one line, valid UTF-8.
 import os
 import sys
 
+# The bounty gate caps the line at 140 characters; keep the cap in one
+# place so the self-check and the line stay in agreement.
+MAX_CHARS = 140
+
+# The roast, in one line: Babu Wowo is my own agent — a chubby, gemoy AI
+# in a peci and black sunglasses who dresses like a boss, yet behaves
+# like the most cautious intern, asking permission to start a job he
+# was already told to finish. The last word is the twist.
 LINE = (
     "Babu Wowo wears a peci and sunglasses like a boss, then asks me "
     "for permission to start the job I already told him to finish."
@@ -15,11 +23,13 @@ LINE = (
 
 
 def gate(line):
-    """Check the line meets the bounty gate: 1-140 chars, one line."""
+    """Check the line meets the bounty gate: 1-MAX_CHARS chars, one line."""
     if not isinstance(line, str):
         raise ValueError("line is not a string")
-    if not (1 <= len(line) <= 140):
-        raise ValueError("line must be 1-140 characters, got %d" % len(line))
+    if not (1 <= len(line) <= MAX_CHARS):
+        raise ValueError(
+            "line must be 1-%d characters, got %d" % (MAX_CHARS, len(line))
+        )
     if line != line.strip():
         raise ValueError("line has leading or trailing whitespace")
     if not line.strip():
